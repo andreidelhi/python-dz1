@@ -267,8 +267,8 @@ def build_report(movies):
     print(f"Средний возраст фильмов: {average_age} лет")
     print(f"Возрастной диапазон: от {newest} до {oldest} лет")
     print("Топ-3 фильма:")
-    for title, _rating in top_n_by_rating(movies):
-        movie = next(movie for movie in movies if movie["title"] == title)
+    top_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)[:3]
+    for movie in top_movies:
         print(f"  {format_report_line(movie)}")
     print("Фильмов по жанрам:")
     for genre, count in sorted(
