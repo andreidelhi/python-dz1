@@ -1,5 +1,7 @@
 """Аналитика каталога стримингового сервиса."""
 
+import math
+
 movies = [
     {
         "title": "The Dune Chronicles",
@@ -84,5 +86,29 @@ movies = [
 ]
 
 
+def average_rating(movies):
+    """Return the catalog's average rating rounded to one decimal place."""
+    if not movies:
+        raise ValueError("Каталог не может быть пустым")
+    return round(sum(movie["rating"] for movie in movies) / len(movies), 1)
+
+
+def catalog_age_stats(movies, current_year=2026):
+    """Return oldest, newest, and average movie age."""
+    if not movies:
+        raise ValueError("Каталог не может быть пустым")
+    ages = [current_year - movie["year"] for movie in movies]
+    return max(ages), min(ages), math.ceil(sum(ages) / len(ages))
+
+
+def duration_in_hours(minutes):
+    """Format a duration in minutes as hours and minutes."""
+    hours = minutes // 60
+    remaining_minutes = minutes % 60
+    return f"{hours}ч {remaining_minutes}м"
+
+
 if __name__ == "__main__":
-    print(f"В каталоге {len(movies)} фильмов.")
+    print(average_rating(movies))
+    print(catalog_age_stats(movies))
+    print(duration_in_hours(155))
