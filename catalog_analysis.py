@@ -223,7 +223,27 @@ def above_average_ratings(movies):
     }
 
 
+def all_genres(movies):
+    """Return the set of all unique catalog genres."""
+    genres = set()
+    for movie in movies:
+        genres.update(movie["genres"])
+    return genres
+
+
+def common_actors(movie1, movie2):
+    """Return actors shared by two movies."""
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    """Return genres present in the first catalog and absent in the second."""
+    genres_a = all_genres(movies_a)
+    genres_b = all_genres(movies_b)
+    return genres_a - genres_b
+
+
 if __name__ == "__main__":
-    print(count_by_genre(movies))
-    print(actor_filmography(movies))
-    print(above_average_ratings(movies))
+    print(sorted(all_genres(movies)))
+    print(common_actors(movies[0], movies[3]))
+    print(genres_only_in_one(movies[5:6], movies[:5]))
