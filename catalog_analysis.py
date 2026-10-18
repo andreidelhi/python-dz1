@@ -161,7 +161,28 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+def normalize_title(title):
+    """Capitalize every word without using str.title()."""
+    words = title.split()
+    return " ".join(word[0].upper() + word[1:] for word in words)
+
+
+def make_slug(title):
+    """Convert a title to a lowercase hyphen-separated slug."""
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    """Format one movie as a readable report line."""
+    title = normalize_title(movie["title"])
+    genres = ", ".join(sorted(movie["genres"]))
+    duration = duration_in_hours(movie["duration_min"])
+    return (
+        f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, '
+        f"{duration}, жанры: {genres}"
+    )
+
+
 if __name__ == "__main__":
-    print_non_comedy_movies(movies)
-    print_first_masterpiece(movies)
-    print(count_long_movies(movies))
+    print(format_report_line(movies[7]))
+    print(make_slug(normalize_title(movies[2]["title"])))
