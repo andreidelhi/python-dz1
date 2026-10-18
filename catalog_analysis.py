@@ -195,6 +195,35 @@ def top_n_by_rating(movies, n=3):
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
 
 
+def count_by_genre(movies):
+    """Count catalog entries for each genre."""
+    counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+
+def actor_filmography(movies):
+    """Return a mapping from each actor to their movie titles."""
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            filmography.setdefault(actor, []).append(movie["title"])
+    return filmography
+
+
+def above_average_ratings(movies):
+    """Return title-rating pairs for films above the catalog average."""
+    if not movies:
+        return {}
+    average = average_rating(movies)
+    return {
+        movie["title"]: movie["rating"] for movie in movies if movie["rating"] > average
+    }
+
+
 if __name__ == "__main__":
-    print(titles_sorted_by_rating(movies))
-    print(top_n_by_rating(movies))
+    print(count_by_genre(movies))
+    print(actor_filmography(movies))
+    print(above_average_ratings(movies))
