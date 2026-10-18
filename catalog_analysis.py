@@ -283,6 +283,13 @@ def build_report(movies):
     print("Фильмы с рейтингом не ниже 8:")
     for movie in iter_high_rated(movies):
         print(f"  {format_report_line(movie)}")
+    print("Фильмы вне жанра comedy:")
+    print_non_comedy_movies(movies)
+    print("Первый фильм с рейтингом выше 9.0:")
+    print_first_masterpiece(movies)
+    print("Поиск в каталоге без фильмов с рейтингом выше 9.0:")
+    movies_without_masterpieces = [movie for movie in movies if movie["rating"] <= 9.0]
+    print_first_masterpiece(movies_without_masterpieces)
 
 
 if __name__ == "__main__":
