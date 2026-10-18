@@ -183,6 +183,18 @@ def format_report_line(movie):
     )
 
 
+def titles_sorted_by_rating(movies):
+    """Return movie titles sorted by descending rating."""
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies, n=3):
+    """Return up to n top-rated movies as title-rating tuples."""
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
+
 if __name__ == "__main__":
-    print(format_report_line(movies[7]))
-    print(make_slug(normalize_title(movies[2]["title"])))
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies))
